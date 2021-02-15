@@ -13,12 +13,13 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor() { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const req = request.clone()
-    if (!req.url.includes('login')) {
-      req.headers.set('Authorization', `Token ${localStorage.token || sessionStorage.token}`)
+    if (!request.url.includes('login')) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Token ${localStorage.token || sessionStorage.token}`
+        }
+      })
     }
-    console.log(req)
-
-    return next.handle(req)
+    return next.handle(request)
   }
 }
