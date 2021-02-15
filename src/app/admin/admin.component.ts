@@ -7,12 +7,10 @@ import { UserService } from '../services/user.service'
   styleUrls: ['./admin.component.sass'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent {
 
   constructor(private userServ: UserService) { }
 
-  ngOnInit(): void {
-    this.userServ.getUser().subscribe(console.log)
-  }
+  user$ = this.userServ.user$
 
 }
